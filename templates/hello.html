@@ -1,0 +1,26 @@
+<!doctype html>
+<title>Hello from Flask</title>
+
+<h1>{{date.month}}/{{date.day}}</h1>
+
+{% for thread in collection %}
+    {% if (thread.views > 1500 or thread.replies > 40)  and thread.date.day == date.day %}
+        <a href = "{{thread.url}}"><p>{{thread.title}}</p></a>
+<p>{{thread.views}} views</p>
+<p>{{thread.replies}} replies</p>
+
+    
+    {% endif %}
+
+{% endfor %}
+
+<h1>{{date.month}}/{{date.day-1}}</h1>
+{% for thread in collection %}
+
+    {% if (thread.views > 1500 or thread.replies > 40) and thread.date.day == date.day-1 %}
+        <a href = "{{thread.url}}"><p>{{thread.title}}</p></a>
+<p>{{thread.views}} views</p>
+    
+    {% endif %}
+
+{% endfor %}
