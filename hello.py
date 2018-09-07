@@ -28,7 +28,7 @@ MONGODB_COLLECTION = "threads"
 app = Flask(__name__)
 today = datetime.today()
 yesterday = today - timedelta(days=1)
-older = today - timedelta(days=2) #threads older than a day old
+older = today - timedelta(days=2) #threads 2 or more days old
 dbconnection = os.environ.get("CONNECT_STRING")
 
 #currentThreads = threads.find({"date":{'$lte':today, '$gt':older}}).sort('views',pymongo.DESCENDING)
@@ -37,7 +37,7 @@ dbconnection = os.environ.get("CONNECT_STRING")
 @app.route('/')
 def hello_world(current= None,old = None,date=None,yesterday=None):
     connection = pymongo.MongoClient(dbconnection)
-        # METHOD 1: Hardcode zones:
+# Hardcode zones:
     from_zone = tz.gettz('UTC')
     to_zone = tz.gettz('US/Eastern')
 
@@ -53,7 +53,7 @@ def hello_world(current= None,old = None,date=None,yesterday=None):
     db = connection.misc
     threads = db.threads
     return render_template(
-        "index.html",
+        "hello.html",
         date = eastern,
         current=threads.find().sort('views',pymongo.DESCENDING), 
         yesterday = threads.find().sort('views',pymongo.DESCENDING),
