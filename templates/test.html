@@ -4,12 +4,17 @@
 <h1>{{date.month}}/{{date.day}}</h1>
 
 {% for thread in current %}
+    {% if (thread.views|int > 1500 or thread.replies|int > 30) and (thread.date.day == date.day) %}
+
         <a href = "{{thread.url}}"><p>{{thread.title}}</p></a>
-<p>{{thread.views}} views</p>
-<p>{{thread.replies}} replies</p>
+        <p>{{thread.views}} views</p>
+        <p>{{thread.replies}} replies</p>
+        <p>Thread Date: {{thread.date.year}}</p>
+
+    {% endif %}
 
     
-    {% endif %}
+   
 
 {% endfor %}
 

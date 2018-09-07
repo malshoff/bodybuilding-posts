@@ -94,7 +94,7 @@
             <h1 style="color:red">Top Threads from {{date.month}}/{{date.day}}</h1>
             <hr>
               {% for thread in current %}
-              {% if (thread.views > 1000 and thread.replies > 25) and (date.day == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %}
+             {# {% if (thread.views|int > 1000 and thread.replies|int > 25) and (date.day == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %} #}
                 <div class="post-preview">
                     <a href="{{thread.url}}" target="_blank">
                         <h3 class="post-title">
@@ -102,16 +102,16 @@
                            
                         </h3>
                         <h4 class="post-subtitle">
-                            {{thread.replies}} Replies
+                            {{thread.replies|int}} Replies
                         </h4>
                         <h4 class="post-subtitle">
-                            {{thread.views}} Views
+                            {{thread.views|int}} Views
                         </h4>
                     </a>
                     <p class="post-meta">Posted by {{thread.op}}</p>
                 </div>
                 <hr>
-                {% endif %}
+               {# {% endif %} #}
                 {% endfor %}
                 </div>
 
@@ -120,17 +120,20 @@
 <h1 style="color:red">Yesterday's Hits</h1>
                 <hr>
               {% for thread in yesterday %}
-              {% if (thread.views > 8000 or thread.replies > 100) and (date.day - 1 == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %}
+              {% if (thread.views|int > 8000 or thread.replies|int > 100) and (date.day - 1 == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %}
                 <div class="post-preview">
                     <a href="{{thread.url}}" target="_blank">
                         <h3 class="post-title">
                             {{thread.title}}
                         </h3>
                         <h4 class="post-subtitle">
-                            {{thread.replies}} Replies
+                            {{thread.replies|int}} Replies
                         </h4>
                         <h4 class="post-subtitle">
-                            {{thread.views}} Views
+                            {{thread.views|int}} Views
+                        </h4>
+                         <h4 class="post-subtitle">
+                            {{date.day}}{{thread.date.day}} {{thread.date.month}} DATE
                         </h4>
                     </a>
                     <p class="post-meta">Posted by {{thread.op}}</p>
@@ -143,17 +146,17 @@
                 <h1 style="color:red">Older Megathreads with New Posts</h1>
                 <hr>
               {% for thread in old %}
-              {% if (thread.views > 50000 or thread.replies > 3000) %}
+              {% if (thread.views|int > 50000 or thread.replies|int > 3000) %}
                 <div class="post-preview">
                     <a href="{{thread.url}}" target="_blank">
                         <h3 class="post-title">
                             {{thread.title}}
                         </h3>
                         <h4 class="post-subtitle">
-                            {{thread.replies}} Replies
+                            {{thread.replies|int}} Replies
                         </h4>
                         <h4 class="post-subtitle">
-                            {{thread.views}} Views
+                            {{thread.views|int}} Views
                         </h4>
                     </a>
                     <p class="post-meta">Posted by {{thread.op}}</p>
