@@ -1,15 +1,23 @@
 import scrapy
 from datetime import datetime,timedelta,timezone
 from dateutil import tz
+from scrapy.spiders import CrawlSpider, Rule
+from scrapy.http import Request
 
 
-class BBSpider(scrapy.Spider):
+class BBSpider(CrawlSpider):
     name = "bb"
+    allowed_domains = ['bodybuilding.com']
+    
     start_urls = [
         'https://forum.bodybuilding.com/forumdisplay.php?f=19',
-        'https://forum.bodybuilding.com/forumdisplay.php?f=19&page=2&order=desc'
-        'https://forum.bodybuilding.com/forumdisplay.php?f=19&page=3&order=desc'
+        'https://forum.bodybuilding.com/forumdisplay.php?f=19&page=2',
+        
     ]
+
+    def start_requests(self):
+        for url in self.start_urls:
+            yield Request(url=url, callback=self.parse, dont_filter=True) 
     
     def parse(self, response):
         from_zone = tz.gettz('UTC')
@@ -39,9 +47,7 @@ class BBSpider(scrapy.Spider):
                 day = int(b[1])
                 year = int(b[2][:4])
                 date = datetime(year,month,day)
-            
-
-
+        
             yield {
                'title': thread.xpath('td/div/div/div/h3/a[1]/text()').extract_first().strip(),
                'url':  root_url + thread.xpath('td/div/div/div/h3/a[1]/@href').extract_first(),
