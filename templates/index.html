@@ -91,10 +91,10 @@
     <div class = "tab-content">
     
             <div class="tab-pane active" id="today">
-            <h1 style="color:red">Top Threads from {{date.month}}/{{date.day}}</h1>
+            <h1 style="color:red">Top Threads from Today</h1>
             <hr>
               {% for thread in current %}
-             {% if (thread.views|int > 1000 and thread.replies|int > 25) and (date.day == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %} 
+             {% if (thread.views|int > 2000 or thread.replies|int > 25) and (date.day == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %} 
                 <div class="post-preview">
                     <a href="{{thread.url}}" target="_blank">
                         <h3 class="post-title">
