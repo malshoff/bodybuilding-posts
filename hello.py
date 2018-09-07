@@ -53,7 +53,7 @@ def hello_world(current= None,old = None,date=None,yesterday=None):
     db = connection.misc
     threads = db.threads
     return render_template(
-        "hello.html",
+        "test.html",
         date = eastern,
         current=threads.find().sort('views',pymongo.DESCENDING), 
         yesterday = threads.find().sort('views',pymongo.DESCENDING),
