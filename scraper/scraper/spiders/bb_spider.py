@@ -1,5 +1,6 @@
 import scrapy
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,timezone
+from dateutil import tz
 
 
 class BBSpider(scrapy.Spider):
@@ -11,14 +12,26 @@ class BBSpider(scrapy.Spider):
     ]
     
     def parse(self, response):
+        from_zone = tz.gettz('UTC')
+        to_zone = tz.gettz('US/Eastern')
+
+
+        utc = datetime.utcnow()
+
+
+        utc = utc.replace(tzinfo=from_zone)
+
+        # Convert time zone
+        eastern = utc.astimezone(to_zone)
+
         root_url = 'https://forum.bodybuilding.com/'
         for thread in response.xpath('//*[@id="thread_inlinemod_form"]/div[1]/table[2]/tr'):
             date = thread.xpath('.//*[@class="label"]/text()').extract_first()
             if("Today" in date):
-                date = datetime.today()
+                date = eastern
 
             elif("Yesterday" in date):
-                date = datetime.today() - timedelta(days=1)
+                date = eastern - timedelta(days=1)
 
             elif("-" in date): # The date is older than Yesterday
                 b = date.replace(",","").split("-")
