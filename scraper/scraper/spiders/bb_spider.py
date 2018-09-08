@@ -5,19 +5,20 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.http import Request
 
 
-class BBSpider(CrawlSpider):
+class BBSpider(scrapy.Spider):
     name = "bb"
-    allowed_domains = ['bodybuilding.com']
+   
     
     start_urls = [
-        'https://forum.bodybuilding.com/forumdisplay.php?f=19',
         'https://forum.bodybuilding.com/forumdisplay.php?f=19&page=2',
+        'https://forum.bodybuilding.com/forumdisplay.php?f=19',
+        
         
     ]
 
     def start_requests(self):
         for url in self.start_urls:
-            yield Request(url=url, callback=self.parse, dont_filter=True) 
+            yield Request(url=url,dont_filter=True) 
     
     def parse(self, response):
         from_zone = tz.gettz('UTC')
