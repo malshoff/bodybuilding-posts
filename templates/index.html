@@ -92,9 +92,10 @@
     
             <div class="tab-pane active" id="today">
             <h1 style="color:red">Top Threads from Today</h1>
+           
             <hr>
               {% for thread in current %}
-             {% if (thread.views|int > 2000 or thread.replies|int > 25) and (date.day == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %} 
+             
                 <div class="post-preview">
                     <a href="{{thread.url}}" target="_blank">
                         <h3 class="post-title">
@@ -111,7 +112,7 @@
                     <p class="post-meta">Posted by {{thread.op}}</p>
                 </div>
                 <hr>
-                {% endif %} 
+                
                 {% endfor %}
                 </div>
 
@@ -119,8 +120,9 @@
 
 <h1 style="color:red">Yesterday's Hits</h1>
                 <hr>
-              {% for thread in yesterday %}
-              {% if (thread.views|int > 5000 or thread.replies|int > 80) and (date.day - 1 == thread.date.day ) and (date.month == thread.date.month) and (date.year == thread.date.year) %}
+                
+              {% for thread in yesterdays %}
+              
                 <div class="post-preview">
                     <a href="{{thread.url}}" target="_blank">
                         <h3 class="post-title">
@@ -137,14 +139,13 @@
                     <p class="post-meta">Posted by {{thread.op}}</p>
                 </div>
                 <hr>
-                {% endif %}
                 {% endfor %}
                 </div>
         <div class="tab-pane" id="old">
                 <h1 style="color:red">Older Megathreads with New Posts</h1>
                 <hr>
               {% for thread in old %}
-              {% if (thread.views|int > 50000 or thread.replies|int > 3000) %}
+              
                 <div class="post-preview">
                     <a href="{{thread.url}}" target="_blank">
                         <h3 class="post-title">
@@ -160,7 +161,7 @@
                     <p class="post-meta">Posted by {{thread.op}}</p>
                 </div>
                 <hr>
-                {% endif %}
+                
                 {% endfor %}
                 </div>
                 
