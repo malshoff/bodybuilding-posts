@@ -69,7 +69,7 @@ def hello_world(current= None,old = None,date=None,yesterdays=None):
             'date':{'$lte':older},
             '$or': [ { 'replies': { '$gte': 3000 } }, { 'views': {'$gte': 50000} } ] 
         }).sort('date',pymongo.DESCENDING)
-        )
+    )
     
 if __name__ == "__main__":
     
