@@ -22,20 +22,18 @@ MONGODB_COLLECTION = "threads"
         
 
 
-#db = connection.misc
-#threads = db.threads
-        
+
 app = Flask(__name__)
 today = datetime.today()
 yesterday = today - timedelta(days=1)
 older = today - timedelta(days=2) #threads 2 or more days old
 dbconnection = os.environ.get("CONNECT_STRING")
 
-#currentThreads = threads.find({"date":{'$lte':today, '$gt':older}}).sort('views',pymongo.DESCENDING)
+
 
 
 @app.route('/')
-def hello_world(current= None,old = None,date=None,yesterday=None):
+def hello_world(current= None,old = None,date=None,yesterdays=None):
     connection = pymongo.MongoClient(dbconnection)
 # Hardcode zones:
     from_zone = tz.gettz('UTC')
@@ -52,12 +50,26 @@ def hello_world(current= None,old = None,date=None,yesterday=None):
     
     db = connection.misc
     threads = db.threads
+    
     return render_template(
         "index.html",
         date = eastern,
-        current=threads.find().sort('views',pymongo.DESCENDING), 
-        yesterday = threads.find().sort('views',pymongo.DESCENDING),
-        old = threads.find({"date":{'$lte':older}}).sort('views',pymongo.DESCENDING))
+        current=threads.find({
+           'date':{'$gte':today},
+           '$or': [ { 'replies': { '$gte': 25 } }, { 'views': {'$gte': 2000} } ] 
+           
+        }).sort('views',pymongo.DESCENDING), 
+
+        yesterdays = threads.find({
+            "date":{'$gte':yesterday, '$lte':today},
+            'replies':{'$gte':80}}
+            ).sort('views', pymongo.DESCENDING),
+
+        old = threads.find({
+            'date':{'$lte':older},
+            '$or': [ { 'replies': { '$gte': 3000 } }, { 'views': {'$gte': 50000} } ] 
+        }).sort('date',pymongo.DESCENDING)
+        )
     
 if __name__ == "__main__":
     
