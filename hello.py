@@ -56,7 +56,7 @@ def hello_world(current= None,old = None,date=None,yesterdays=None):
         date = eastern,
         current=threads.find({
            'date':{'$gte':today},
-           '$or': [ { 'replies': { '$gte': 25 } }, { 'views': {'$gte': 2000} } ] 
+           'replies':{'$gte':20} 
            
         }).sort('views',pymongo.DESCENDING), 
 
