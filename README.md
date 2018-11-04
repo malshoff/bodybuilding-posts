@@ -2,6 +2,8 @@
 
 A Flask web application that displays the top posts of the day from the Bodybuilding.com's infamous "misc" forum.
 
+##[View thew demo site here](https://mal-bb.cfapps.io/)
+
 ## Getting Started: Development Environment
 Clone the repository 
 

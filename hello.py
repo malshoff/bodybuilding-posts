@@ -36,6 +36,7 @@ dbconnection = os.environ.get("CONNECT_STRING")
 def hello_world(current= None,old = None,yesterdays=None):
     connection = pymongo.MongoClient(dbconnection)
 # Hardcode zones:
+    """ 
     from_zone = tz.gettz('UTC')
     to_zone = tz.gettz('US/Eastern')
 
@@ -44,9 +45,10 @@ def hello_world(current= None,old = None,yesterdays=None):
 
 
     utc = utc.replace(tzinfo=from_zone)
+    """
 
 # Convert time zone
-    eastern = utc.astimezone(to_zone)
+    #eastern = utc.astimezone(to_zone)
     
     db = connection.misc
     threads = db.threads
