@@ -33,7 +33,7 @@ dbconnection = os.environ.get("CONNECT_STRING")
 
 
 @app.route('/')
-def hello_world(current= None,old = None,date=None,yesterdays=None):
+def hello_world(current= None,old = None,yesterdays=None):
     connection = pymongo.MongoClient(dbconnection)
 # Hardcode zones:
     from_zone = tz.gettz('UTC')
@@ -53,7 +53,6 @@ def hello_world(current= None,old = None,date=None,yesterdays=None):
     
     return render_template(
         "index.html",
-        date = eastern,
         current=threads.find({
            'date':{'$gte':today},
            'replies':{'$gte':20} 
