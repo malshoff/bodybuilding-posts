@@ -62,9 +62,12 @@ def hello_world(current= None,old = None,yesterdays=None,top = None):
         "home.html",
 
         top = threads.aggregate([
+            {"$match": 
+                {"replies": {"$gte": 20}}
+            },
             {"$group" : { "_id" : '$op', "count" : {"$sum" : 1}}},
             {"$sort" : {"count": -1}},
-            {"$limit": 20}
+            {"$limit": 20},
             ]),
 
         current=threads.find({
