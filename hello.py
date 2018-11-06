@@ -7,11 +7,12 @@ Created on Mon Apr 18 17:28:58 2016
 import pymongo
 import os
 
-
 from datetime import datetime, timedelta
 from dateutil import tz
+
 from flask import Flask
 from flask import render_template
+from flask_restful import Api, Resource, reqparse
 
 """
 MONGODB_SERVER = "localhost"
@@ -24,6 +25,8 @@ MONGODB_COLLECTION = "threads"
 
 
 app = Flask(__name__)
+api = Api(app)
+
 today = datetime.today()
 yesterday = today - timedelta(days=1)
 older = today - timedelta(days=2) #threads 2 or more days old
@@ -47,14 +50,14 @@ def hello_world(current= None,old = None,yesterdays=None):
     utc = utc.replace(tzinfo=from_zone)
     """
 
-# Convert time zone
+    # Convert time zone
     #eastern = utc.astimezone(to_zone)
     
     db = connection.misc
     threads = db.threads
     
     return render_template(
-        "index.html",
+        "home.html",
         current=threads.find({
            'date':{'$gte':today},
            'replies':{'$gte':20} 
