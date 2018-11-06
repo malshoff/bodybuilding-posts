@@ -60,7 +60,7 @@ def hello_world(current= None,old = None,yesterdays=None,top = None,quantity=Non
      
     return render_template(
         "home.html",
-
+        
         top = threads.aggregate([
             {"$group" : { "_id" : '$op', "count" : {"$sum" : 1}}},
             {"$sort" : {"count": -1}},
