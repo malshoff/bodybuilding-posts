@@ -85,6 +85,7 @@
   <li class="active"><a href="#today" data-toggle="tab">Today</a></li>
   <li><a href="#yesterday" data-toggle="tab">Yesterday</a></li>
   <li><a href="#old" data-toggle="tab">Older</a></li>
+  <li><a href="#top" data-toggle="tab">Top Thread Creators</a></li>
 </ul>
     <!-- Main Content -->
     <div class = "container">
@@ -116,9 +117,9 @@
                 {% endfor %}
                 </div>
                 
-                <div class="tab-pane" id="yesterday">
+            <div class="tab-pane" id="yesterday">
 
-<h1 style="color:red">Yesterday's Hits</h1>
+            <h1 style="color:red">Yesterday's Hits</h1>
                 <hr>
                 
               {% for thread in yesterdays %}
@@ -140,7 +141,26 @@
                 </div>
                 <hr>
                 {% endfor %}
+            </div>
+            <div class="tab-pane" id="top">
+
+            <h1 style="color:red">Top Thread Creators</h1>
+                <hr>
+                
+              {% for user in top %}
+              
+                <div class="post-preview">
+                    
+                        <h3 class="post-title">
+                            {{user._id}}
+                        </h3>
+                        <h4 class="post-subtitle">
+                            {{user.count}} Threads Created
+                        </h4>
                 </div>
+                <hr>
+                {% endfor %}
+            </div>
         <div class="tab-pane" id="old">
                 <h1 style="color:red">Older Megathreads with New Posts</h1>
                 <hr>
@@ -166,6 +186,7 @@
                 </div>
                 
             </div>
+        
         </div>
     
    

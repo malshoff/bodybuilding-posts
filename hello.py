@@ -41,7 +41,7 @@ threads = db.threads
 
 
 @app.route('/')
-def hello_world(current= None,old = None,yesterdays=None):
+def hello_world(current= None,old = None,yesterdays=None,top = None):
     
 # Hardcode zones:
     """ 
@@ -60,6 +60,12 @@ def hello_world(current= None,old = None,yesterdays=None):
      
     return render_template(
         "home.html",
+
+        top = threads.aggregate([
+            {"$group" : { "_id" : '$op', "count" : {"$sum" : 1}}},
+            {"$sort" : {"count": -1}},
+            {"$limit": 10}]),
+
         current=threads.find({
            'date':{'$gte':today},
            'replies':{'$gte':20} 
@@ -74,12 +80,19 @@ def hello_world(current= None,old = None,yesterdays=None):
         old = threads.find({
             'date':{'$lte':older},
             '$or': [ { 'replies': { '$gte': 3000 } }, { 'views': {'$gte': 50000} } ] 
-        }).sort('date',pymongo.DESCENDING)
+            }).sort('date',pymongo.DESCENDING)
     )
 
-@app.route("/op/<string:name>")
-def op(name):
+@app.route("/user/<string:name>")
+def get_user(name):
     return dumps(threads.find({'op':re.compile(name,re.IGNORECASE)}))
+
+@app.route("/users/")
+def get_users():
+    return dumps(threads.aggregate([
+        {"$group" : { "_id" : '$op', "count" : {"$sum" : 1}}},
+        {"$sort" : {"count": -1}}
+    ]))
 
 if __name__ == "__main__":
    
