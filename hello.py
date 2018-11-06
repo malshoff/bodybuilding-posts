@@ -27,7 +27,7 @@ MONGODB_COLLECTION = "threads"
 
 
 app = Flask(__name__)
-api = Api(app)
+
 
 today = datetime.today()
 yesterday = today - timedelta(days=1)
