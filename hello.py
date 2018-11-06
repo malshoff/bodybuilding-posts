@@ -14,6 +14,9 @@ from flask import Flask
 from flask import render_template
 from flask_restful import Api, Resource, reqparse
 
+from bson.json_util import dumps
+import re
+
 """
 MONGODB_SERVER = "localhost"
 MONGODB_PORT = 27017
@@ -30,14 +33,17 @@ api = Api(app)
 today = datetime.today()
 yesterday = today - timedelta(days=1)
 older = today - timedelta(days=2) #threads 2 or more days old
-dbconnection = os.environ.get("CONNECT_STRING")
 
+dbconnection = os.environ.get("CONNECT_STRING")
+connection = pymongo.MongoClient(dbconnection)
+db = connection.misc
+threads = db.threads
 
 
 
 @app.route('/')
 def hello_world(current= None,old = None,yesterdays=None):
-    connection = pymongo.MongoClient(dbconnection)
+    
 # Hardcode zones:
     """ 
     from_zone = tz.gettz('UTC')
@@ -53,8 +59,7 @@ def hello_world(current= None,old = None,yesterdays=None):
     # Convert time zone
     #eastern = utc.astimezone(to_zone)
     
-    db = connection.misc
-    threads = db.threads
+    
     
     return render_template(
         "home.html",
@@ -74,8 +79,12 @@ def hello_world(current= None,old = None,yesterdays=None):
             '$or': [ { 'replies': { '$gte': 3000 } }, { 'views': {'$gte': 50000} } ] 
         }).sort('date',pymongo.DESCENDING)
     )
-    
+
+@app.route("/op/<string:name>")
+def op(name):
+    return dumps(threads.find({'op':re.compile(name,re.IGNORECASE)}))
+
 if __name__ == "__main__":
-    
+   
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)

@@ -19,7 +19,7 @@ MONGODB_PORT = 27017
 MONGODB_DB = "misc"
 MONGODB_COLLECTION = "threads"
 """
-        
+from bson.json_util import dumps    
         
 app = Flask(__name__)
 today = datetime.today()
@@ -43,7 +43,7 @@ eastern = utc.astimezone(to_zone)
 
 db = connection.misc
 threads = db.threads
-print("Current:")
+"""print("Current:")
 current=threads.find({
            "date":{'$gte':today}
         }).sort('views',pymongo.DESCENDING)
@@ -57,6 +57,11 @@ yesterdays = threads.find({
         }).sort('views', pymongo.DESCENDING)
 for x in yesterdays:
     print(x)
+    """
+found = threads.find({'op':"ZachSmash"})
+print(dumps(found))
+#for x in found:
+#        print(x)
 
 #currentThreads = threads.find({"date":{'$lte':today, '$gt':older}}).sort('views',pymongo.DESCENDING)
 
