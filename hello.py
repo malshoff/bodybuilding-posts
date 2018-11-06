@@ -41,7 +41,7 @@ threads = db.threads
 
 
 @app.route('/')
-def hello_world(current= None,old = None,yesterdays=None,top = None):
+def hello_world(current= None,old = None,yesterdays=None,top = None,quantity=None):
     
 # Hardcode zones:
     """ 
@@ -62,6 +62,12 @@ def hello_world(current= None,old = None,yesterdays=None,top = None):
         "home.html",
 
         top = threads.aggregate([
+            {"$group" : { "_id" : '$op', "count" : {"$sum" : 1}}},
+            {"$sort" : {"count": -1}},
+            {"$limit": 20},
+            ]),
+
+        quantity = threads.aggregate([
             {"$match": 
                 {"replies": {"$gte": 20}}
             },
