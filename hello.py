@@ -57,9 +57,7 @@ def hello_world(current= None,old = None,yesterdays=None):
 
     # Convert time zone
     #eastern = utc.astimezone(to_zone)
-    
-    
-    
+     
     return render_template(
         "home.html",
         current=threads.find({
