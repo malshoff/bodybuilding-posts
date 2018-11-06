@@ -64,13 +64,13 @@ def hello_world(current= None,old = None,yesterdays=None,top = None):
         top = threads.aggregate([
             {"$group" : { "_id" : '$op', "count" : {"$sum" : 1}}},
             {"$sort" : {"count": -1}},
-            {"$limit": 10}]),
+            {"$limit": 10}
+            ]),
 
         current=threads.find({
-           'date':{'$gte':today},
-           'replies':{'$gte':20} 
-           
-        }).sort('views',pymongo.DESCENDING), 
+            'date':{'$gte':today},
+            'replies':{'$gte':20} 
+            }).sort('views',pymongo.DESCENDING), 
 
         yesterdays = threads.find({
             "date":{'$gte':yesterday, '$lte':today},
@@ -80,7 +80,7 @@ def hello_world(current= None,old = None,yesterdays=None,top = None):
         old = threads.find({
             'date':{'$lte':older},
             '$or': [ { 'replies': { '$gte': 3000 } }, { 'views': {'$gte': 50000} } ] 
-            }).sort('date',pymongo.DESCENDING)
+            })
     )
 
 @app.route("/user/<string:name>")
