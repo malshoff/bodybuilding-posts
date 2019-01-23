@@ -20,7 +20,7 @@ class MongoPipeline(object):
    
 
     def open_spider(self, spider):
-        self.client = pymongo.MongoClient(dbsettings.conn["CONNECT_STRING"])
+        self.client = pymongo.MongoClient(dbsettings.CONNECT_STRING)
         self.db = self.client["misc"]
 
     def close_spider(self, spider):

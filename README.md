@@ -2,7 +2,7 @@
 
 A Flask web application that displays the top posts of the day from the Bodybuilding.com's infamous "misc" forum.
 
-## [View thew demo site here](https://mal-bb.cfapps.io/)
+## [View the demo site here](https://bb-archive.apps.pcfone.io/)
 
 ## Getting Started: Development Environment
 Clone the repository 
@@ -50,7 +50,6 @@ Alternatively, edit hello.py so that CONNECT_STRING references a connection to y
     }
 }
 ```
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the Dev Server
 
