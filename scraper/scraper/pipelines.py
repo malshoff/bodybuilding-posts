@@ -14,11 +14,8 @@ class ScraperPipeline(object):
         return item
 
 class MongoPipeline(object):
-
     collection_name = 'threads'
     
-   
-
     def open_spider(self, spider):
         self.client = pymongo.MongoClient(dbsettings.CONNECT_STRING)
         self.db = self.client["misc"]
