@@ -3,3 +3,4 @@ requirements-backup.txt
 requirements-old.txt
 scraper/build/lib/scraper/dbsettings.py
 scraper/scraper/dbsettings.py
+*.pyc
